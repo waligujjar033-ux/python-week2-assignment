@@ -1,0 +1,2 @@
+# T5 uses Python standard library only.
+# No additional packages required for T5.
