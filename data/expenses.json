@@ -1,0 +1,63 @@
+{
+    "expenses": [
+        {
+            "date": "2026-09-03",
+            "category": "Groceries",
+            "amount": "4250.00",
+            "note": "Monthly ration"
+        },
+        {
+            "date": "2026-09-10",
+            "category": "Transport",
+            "amount": "1500.00",
+            "note": "Fuel"
+        },
+        {
+            "date": "2026-09-15",
+            "category": "Bills",
+            "amount": "8500.00",
+            "note": "Electricity"
+        },
+        {
+            "date": "2026-10-02",
+            "category": "Groceries",
+            "amount": "3980.50",
+            "note": ""
+        },
+        {
+            "date": "2026-10-09",
+            "category": "Transport",
+            "amount": "1500.00",
+            "note": "Fuel"
+        },
+        {
+            "date": "2026-10-21",
+            "category": "Food",
+            "amount": "1850.75",
+            "note": "Dinner"
+        },
+        {
+            "date": "2026-10-30",
+            "category": "Bills",
+            "amount": "2150.00",
+            "note": "Internet"
+        },
+        {
+            "date": "2026-11-05",
+            "category": "Groceries",
+            "amount": "4410.25",
+            "note": "Monthly ration"
+        },
+        {
+            "date": "2026-11-23",
+            "category": "Food",
+            "amount": "650.00",
+            "note": "Lunch"
+        }
+    ],
+    "monthly_totals": {
+        "2026-09": "14250.00",
+        "2026-10": "9481.25",
+        "2026-11": "5060.25"
+    }
+}
