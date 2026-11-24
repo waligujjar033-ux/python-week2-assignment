@@ -31,7 +31,7 @@ TEMPERATURE = ["C", "F", "K"]
 
 
 def ask_choice(prompt, options):
-
+    """Ask the user to select a valid option."""
     while True:
 
         choice = input(prompt).strip()
@@ -43,7 +43,7 @@ def ask_choice(prompt, options):
 
 
 def ask_number(prompt):
-
+    """Ask the user to enter a valid number."""
     while True:
 
         try:
@@ -60,7 +60,7 @@ def ask_number(prompt):
 
 
 def convert_factor(value, from_unit, to_unit, factors):
-
+    """Convert values using conversion factors."""
     base_value = value * factors[from_unit]
 
     result = base_value / factors[to_unit]
@@ -73,7 +73,7 @@ def convert_factor(value, from_unit, to_unit, factors):
 
 
 def to_kelvin(value, unit):
-
+    """Convert temperature to Kelvin."""
     if unit == "C":
         result = value + 273.15
 
@@ -95,7 +95,7 @@ def to_kelvin(value, unit):
 
 
 def from_kelvin(value, unit):
-
+    """Convert Kelvin to the target temperature unit."""
     if unit == "C":
         return value - 273.15
 
@@ -110,7 +110,7 @@ def from_kelvin(value, unit):
 
 
 def convert_temperature(value, from_unit, to_unit):
-
+    """Convert between temperature units."""
     kelvin = to_kelvin(value, from_unit)
 
     return from_kelvin(kelvin, to_unit)
@@ -120,7 +120,7 @@ def convert_temperature(value, from_unit, to_unit):
 
 
 def convert(value, from_unit, to_unit, *, precision=2):
-
+    """Convert a value between supported units."""
     if not isinstance(precision, int) or precision < 0:
         raise ValueError("Precision must be a non-negative integer.")
 
@@ -190,6 +190,7 @@ def convert(value, from_unit, to_unit, *, precision=2):
 
 
 def convert_many(*values, from_unit, to_unit):
+    """Convert multiple values from one unit to another."""
     results = []
 
     for value in values:
@@ -210,7 +211,7 @@ def convert_many(*values, from_unit, to_unit):
 
 
 def ask_values(prompt):
-
+    """Ask the user for one or more numeric values."""
     while True:
 
         raw = input(prompt).strip()
@@ -241,7 +242,7 @@ def ask_values(prompt):
 
 
 def ask_number_from_text(text):
-
+    """Validate numeric text and return a number."""
     while True:
 
         try:
@@ -262,7 +263,7 @@ def ask_number_from_text(text):
 
 
 def display_results(values, results, from_unit, to_unit):
-
+    """Display the conversion results."""
     for value, result in zip(values, results):
 
         print(
@@ -275,7 +276,7 @@ def display_results(values, results, from_unit, to_unit):
 
 
 def ask_unit(prompt, options, category):
-
+    """Ask the user to select a valid unit."""
     while True:
 
         unit = input(prompt).strip()
@@ -298,7 +299,7 @@ def ask_unit(prompt, options, category):
 
 
 def main():
-
+    """Run the unit converter menu."""
     while True:
 
         print("\n===== Unit Converter =====")
@@ -374,6 +375,7 @@ def main():
 
 
 def run_tests():
+    """Run tests for the unit converter."""
 
     # Test 1: Length
     assert convert(1000, "mm", "m") == 1
