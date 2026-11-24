@@ -5,6 +5,8 @@ from collections import Counter, defaultdict
 january_data = """
 Ali,Lahore,keyboard,2,3500
 Sara,Karachi,mouse,1,1200
+
+
 Hassan,Lahore,monitor,1,32000
 Ayesha,Islamabad,keyboard,1,3500
 Ali,Lahore,mouse,3,1200
@@ -29,6 +31,8 @@ def parse_sales(data):
     sales = []
 
     for line in data.strip().splitlines():
+        if not line.strip():
+         continue
 
         customer, city, product, quantity, price = line.strip().split(",")
 
@@ -144,9 +148,9 @@ def main():
     )
 
     for product, amount in sorted_revenue:
-        print(f"  {product:<10} Rs {amount:>7,}")
+        print(f"  {product:<9} Rs {amount:>7,}")
 
-    print(f"  {'TOTAL':<10} Rs {sum(revenue.values()):>7,}")
+    print(f"  {'TOTAL':<9} Rs {sum(revenue.values()):>7,}")
 
     # Top 3 products
     print("\nTop 3 products by units")
