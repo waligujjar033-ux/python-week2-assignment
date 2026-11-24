@@ -189,8 +189,7 @@ def convert(value, from_unit, to_unit, *, precision=2):
 # 6. MULTIPLE VALUES CONVERSION
 
 
-def convert_many(values, from_unit, to_unit):
-
+def convert_many(*values, from_unit, to_unit):
     results = []
 
     for value in values:
@@ -357,11 +356,10 @@ def main():
         values = ask_values("Value: ")
 
         try:
-
             results = convert_many(
-                values,
-                from_unit,
-                to_unit
+               *values,
+                from_unit=from_unit,
+                 to_unit=to_unit
             )
 
             display_results(
@@ -411,9 +409,9 @@ def run_tests():
 
     # Test 10: Multiple values
     assert convert_many(
-        [1, 5, 10],
-        "inch",
-        "cm"
+      1, 5, 10,
+      from_unit="inch",
+      to_unit="cm"
     ) == [2.54, 12.7, 25.4]
 
     # Test 11: Invalid category
