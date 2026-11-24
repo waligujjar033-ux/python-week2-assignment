@@ -210,6 +210,7 @@ def subcategories(tree, name):
 
 def filter_products(
     products,
+    category_tree,
     *,
     category=None,
     max_price=None,
@@ -444,6 +445,7 @@ def main():
 
             results = filter_products(
                 products,
+                category_tree,
                 category=category,
                 max_price=max_price,
                 min_rating=min_rating,
