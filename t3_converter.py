@@ -305,10 +305,7 @@ def main():
 
         print("\n===== Unit Converter =====")
 
-        print("1. Length")
-        print("2. Weight")
-        print("3. Temperature")
-        print("4. Exit")
+        print("1. Length 2. Weight 3. Temperature 4. Exit")
 
         choice = ask_choice(
             "Choose: ",
