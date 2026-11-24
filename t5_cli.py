@@ -10,10 +10,16 @@ from utils import (
     make_password
 )
 
+class CustomArgumentParser(argparse.ArgumentParser):
+    """Handle invalid command-line arguments."""
 
+    def error(self, message):
+        """Print an error message and exit with code 1."""
+        print(f"Error: {message}")
+        sys.exit(1)
 def main():
     """Run the command-line utilities and handle user commands."""
-    parser = argparse.ArgumentParser(
+    parser = CustomArgumentParser(
         description="T5 Utilities Command Line Tool"
     )
 
