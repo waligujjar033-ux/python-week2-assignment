@@ -221,8 +221,6 @@ def ask_values(prompt):
             print("Please enter at least one number.")
             continue
 
-        if len(parts) == 1:
-            return [ask_number_from_text(parts[0])]
 
         try:
 
