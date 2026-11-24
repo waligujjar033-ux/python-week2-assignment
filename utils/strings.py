@@ -21,7 +21,8 @@ def is_valid_email(text):
     """Check whether the given email address is valid."""
     if not isinstance(text, str):
         raise ValueError("Email must be a string.")
-
+    if ".." in text:
+        return False
     pattern = r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}"
 
     return re.fullmatch(pattern, text) is not None
