@@ -71,7 +71,7 @@ def part_a():
     # Products rating >= 4.5 with 10% discount
 
     task2 = {
-        p["name"]: round(p["price"] * 0.90, 2)
+        p["name"]: round(p["price"] * 0.90)
         for p in products
         if p["rating"] >= 4.5
     }
