@@ -12,7 +12,7 @@ from utils import (
 
 
 def main():
-
+    """Run the command-line utilities and handle user commands."""
     parser = argparse.ArgumentParser(
         description="T5 Utilities Command Line Tool"
     )

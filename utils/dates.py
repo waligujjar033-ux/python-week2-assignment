@@ -2,7 +2,7 @@ from datetime import date
 
 
 def parse_date(date_text):
-
+    """Parse a date string in YYYY-MM-DD format."""
     if not isinstance(date_text, str):
         raise ValueError("Date must be a string.")
 
@@ -16,7 +16,7 @@ def parse_date(date_text):
 
 
 def age_in_days(birth_date):
-
+    """Calculate age in days from the birth date."""
     birth = parse_date(birth_date)
 
     today = date.today()
@@ -30,7 +30,7 @@ def age_in_days(birth_date):
 
 
 def days_until(target_date):
-
+    """Calculate the number of days until the target date."""
     target = parse_date(target_date)
 
     today = date.today()

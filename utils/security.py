@@ -3,7 +3,7 @@ import string
 
 
 def make_password(length=12, *, symbols=True):
-
+    """Generate a random password with optional symbols."""
     if isinstance(length, bool) or not isinstance(length, int):
         raise ValueError(
             "Length must be an integer."
