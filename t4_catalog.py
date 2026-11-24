@@ -51,7 +51,7 @@ category_tree = {
 
 
 def part_a():
-
+    """Display the results of seven product catalog tasks."""
     print("\n========== PART A ==========")
 
     # TASK 1
@@ -166,9 +166,9 @@ def part_a():
 # 3. RECURSIVE SUBCATEGORIES FUNCTION
 
 def subcategories(tree, name):
-
+    """Find a category and its subcategories recursively."""
     def search(branch):
-
+        """Search the category tree for the requested category."""
         for category, children in branch.items():
 
             if category == name:
@@ -183,7 +183,7 @@ def subcategories(tree, name):
 
 
     def collect(category, children):
-
+        """Collect a category and its subcategories."""
         result = [category]
 
         for child, grandchildren in children.items():
@@ -217,7 +217,7 @@ def filter_products(
     in_stock=False,
     sort_by="price"
 ):
-
+    """Filter and sort products using the specified criteria."""
     # Validate sorting option
 
     if sort_by not in ["price", "rating", "name"]:
@@ -305,7 +305,7 @@ def filter_products(
 # ------------------------------------------
 
 def display_products(items):
-
+    """Display matching products in a formatted table."""
     print()
 
     print(
@@ -337,7 +337,7 @@ def display_products(items):
 # 6. INPUT HELPERS
 
 def ask_optional_number(prompt):
-
+    """Ask the user for an optional non-negative number."""
     while True:
 
         value = input(prompt).strip()
@@ -362,7 +362,7 @@ def ask_optional_number(prompt):
 
 
 def ask_yes_no(prompt):
-
+    """Ask the user for a yes or no response."""
     while True:
 
         answer = input(prompt).strip().lower()
@@ -377,7 +377,7 @@ def ask_yes_no(prompt):
 
 
 def ask_sort():
-
+    """Ask the user to select a valid sorting option."""
     while True:
 
         sort_by = input(
@@ -400,7 +400,7 @@ def ask_sort():
 # ------------------------------------------
 
 def main():
-
+    """Run the product catalog filtering program."""
     # Print Part A answers first
     part_a()
 
