@@ -104,6 +104,9 @@ def main():
 
                 try:
                     qty = int(qty_input)
+                    if qty <= 0:
+                     print("Error: quantity must be greater than zero.")
+                     continue
 
                     # BUG-6: Custom exception handled here
                     sale_amount = sell(stock, prices, name, qty)
