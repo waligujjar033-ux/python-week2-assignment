@@ -1,10 +1,11 @@
 date,category,amount,note
 2026-09-03,Groceries,4250.00,Monthly ration
-2026-09-10,Transport,1500.00,Fuel
+2026-09-10,Transport,1500,Fuel
 2026-09-15,Bills,8500.00,Electricity
+2026-09-28,Food,abc,Lunch with team
 2026-10-02,Groceries,3980.50,
-2026-10-09,Transport,1500.00,Fuel
+2026-10-09,Transport,1500,Fuel
+2026-13-01,Bills,2100,Internet
 2026-10-21,Food,1850.75,Dinner
-2026-10-30,Bills,2150.00,Internet
+2026-10-30,Bills,2150,Internet
 2026-11-05,Groceries,4410.25,Monthly ration
-2026-11-23,Food,650.00,Lunch
