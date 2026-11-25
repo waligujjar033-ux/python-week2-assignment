@@ -3,3 +3,8 @@ __pycache__/
 *.pyc
 .vscode/
 tasks_backup.json
+tasks.json
+tasks.json.bak
+errors.log
+data/expenses.json
+tasks_test_backup.json
