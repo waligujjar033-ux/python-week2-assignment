@@ -27,7 +27,7 @@ FIELDS = ["date", "category", "amount", "note"]
 # ==============================
 
 def log_error(line_number, reason):
-
+    """Record invalid expense rows in the error log."""
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     message = f"{timestamp} | line {line_number} | {reason}\n"
@@ -48,7 +48,7 @@ def log_error(line_number, reason):
 # ==============================
 
 def validate_expense(row):
-
+    """Validate an expense row and return the cleaned expense."""
     if None in row or any(row.get(field) is None for field in FIELDS):
         raise ValueError("missing column")
 
@@ -97,7 +97,7 @@ def validate_expense(row):
 # ==============================
 
 def load_expenses():
-
+    """Load valid expenses from CSV and log invalid rows."""
     expenses = []
 
     bad_rows = 0
@@ -148,7 +148,7 @@ def load_expenses():
 # ==============================
 
 def save_expenses(expenses):
-
+    """Save expenses to the CSV file and return the save status."""
     try:
 
         DATA_DIR.mkdir(parents=True, exist_ok=True)
@@ -190,7 +190,7 @@ def save_expenses(expenses):
 # ==============================
 
 def add_expense(expenses):
-
+    """Collect, validate and save a new expense."""
     print("\n===== Add Expense =====")
 
     while True:
@@ -270,7 +270,7 @@ def add_expense(expenses):
 # ==============================
 
 def list_expenses(expenses):
-
+    """Display all expenses in a formatted table."""
     print("\n===== All Expenses =====")
 
     if not expenses:
@@ -301,7 +301,7 @@ def list_expenses(expenses):
 # ==============================
 
 def calculate_monthly_totals(expenses):
-
+    """Calculate and return total expenses for each month."""
     totals = {}
 
     for expense in expenses:
@@ -317,7 +317,7 @@ def calculate_monthly_totals(expenses):
 
 
 def show_monthly_totals(expenses):
-
+    """Display monthly expense totals and the overall total."""
     totals = calculate_monthly_totals(expenses)
 
     print("\n===== Monthly Totals =====")
@@ -342,7 +342,7 @@ def show_monthly_totals(expenses):
 # ==============================
 
 def show_category_totals(expenses):
-
+    """Display expense totals and percentage shares by category."""
     totals = {}
 
     for expense in expenses:
@@ -397,7 +397,7 @@ def show_category_totals(expenses):
 # ==============================
 
 def export_json(expenses):
-
+    """Export expenses and monthly totals to a JSON file."""
     monthly_totals = calculate_monthly_totals(expenses)
 
     json_expenses = []
@@ -457,7 +457,7 @@ def export_json(expenses):
 # ==============================
 
 def main():
-
+    """Run the expense logger menu and handle user choices."""
     expenses = load_expenses()
 
     while True:
