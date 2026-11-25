@@ -1,7 +1,7 @@
 # Python Week 2 Developer Assignment
 
-Python Version: 3.14.5
-
+Required Python Version: 3.12+
+Tested on Python: 3.14.5
 ## Topics
 - Dictionaries and Sets
 - Functions
@@ -19,6 +19,19 @@ T4 - Product Catalog
 T5 - CLI
 T6 - Expense Logger
 T7 - To-Do Application
+
+## How to Run Each Ticket
+
+```bash
+python t1_sales_report.py
+python t2_bugfix.py
+python t3_converter.py
+python t3_converter.py --test
+python t4_catalog.py
+python t5_cli.py --help
+python t6_expenses.py
+python -m todo
+```
 
 
 ## Task 2 - Bug Log
@@ -111,4 +124,13 @@ Invalid inputs display an error message and exit with code 1.
 Successful commands exit with code 0.
 
 ### Dependencies
-Python 3.10 or later. No external libraries required.
+Python 3.12 or later.
+rich==15.0.0 is required for the T7 To-Do Application.
+
+## What I Found Hardest
+
+- **T3 – Unit Converter:** Handling multiple values, unit conversions, and input validation.
+- **T6 – Expense Logger:** Handling invalid CSV rows, calculating totals, and exporting data to JSON.
+- **T7 – To-Do Application:** Managing unique task IDs, handling corrupted JSON files, and separating logic across different modules.
+
+These tasks helped me improve my understanding of functions, file handling, error handling, and modular programming.
