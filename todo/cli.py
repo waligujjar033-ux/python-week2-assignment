@@ -59,7 +59,7 @@ def show_tasks(tasks):
     console.print(table)
 
 
-def handle_add(tasks):
+def handle_add(tasks, last_id): 
     """Ask for task details and add a task."""
 
     title = input("Title: ")
@@ -80,15 +80,16 @@ def handle_add(tasks):
 
         try:
             updated, task = add_task(
-                tasks, title, due, priority
+                tasks, title, due, priority,last_id
             )
 
-            save_tasks(updated, TASKS_PATH)
+            last_id = task["id"]
+
+            save_tasks(updated, TASKS_PATH, last_id)
 
             print(f"Added task {task['id']}.")
 
-            return updated
-
+            return updated, last_id
         except ValidationError as error:
 
             print("Error:", error)
@@ -100,21 +101,21 @@ def handle_add(tasks):
             raise
 
 
-def handle_complete(tasks):
+def handle_complete(tasks, last_id):
     """Complete a task using its ID."""
 
     task_id = ask_number("Task ID: ")
 
     updated, task = complete_task(tasks, task_id)
 
-    save_tasks(updated, TASKS_PATH)
+    save_tasks(updated, TASKS_PATH, last_id)
 
     print("Completed:", task["title"])
 
     return updated
 
 
-def handle_delete(tasks):
+def handle_delete(tasks, last_id):
     """Delete a task after confirmation."""
 
     task_id = ask_number("Task ID: ")
@@ -131,7 +132,7 @@ def handle_delete(tasks):
 
     updated, deleted = delete_task(tasks, task_id)
 
-    save_tasks(updated, TASKS_PATH)
+    save_tasks(updated, TASKS_PATH, last_id)
 
     print("Deleted:", deleted["title"])
 
@@ -154,8 +155,7 @@ def main():
     """Run the main To-Do application."""
 
     try:
-        tasks = load_tasks(TASKS_PATH)
-
+        tasks, last_id = load_tasks(TASKS_PATH)
         print(f"Loaded {len(tasks)} tasks.")
 
     except TodoError as error:
@@ -175,7 +175,7 @@ def main():
             choice = validate_choice(str(choice))
 
             if choice == 1:
-                tasks = handle_add(tasks)
+                tasks, last_id = handle_add(tasks,last_id)
 
             elif choice == 2:
 
@@ -203,10 +203,10 @@ def main():
                 )
 
             elif choice == 3:
-                tasks = handle_complete(tasks)
+                tasks = handle_complete(tasks, last_id)
 
             elif choice == 4:
-                tasks = handle_delete(tasks)
+                tasks = handle_delete(tasks, last_id)
 
             elif choice == 5:
                 handle_search(tasks)

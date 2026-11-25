@@ -64,7 +64,7 @@ def validate_priority(priority):
     return priority
 
 
-def add_task(tasks, title, due, priority):
+def add_task(tasks, title, due, priority, last_id):  
     """Return a new task list with the added task."""
 
     title = title.strip()
@@ -84,14 +84,10 @@ def add_task(tasks, title, due, priority):
     due = validate_date(due)
     priority = validate_priority(priority)
 
-    highest_id = max(
-        (task["id"] for task in tasks),
-        default=0
-    )
 
     new_task = {
-        "id": highest_id + 1,
-        "title": title,
+        "id": last_id + 1,       
+         "title": title,
         "due": due,
         "priority": priority,
         "done": False,

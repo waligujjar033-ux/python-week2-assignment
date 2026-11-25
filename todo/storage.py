@@ -49,12 +49,27 @@ def load_tasks(path):
 
     if not path.exists():
         tasks = [task.copy() for task in STARTER_TASKS]
-        save_tasks(tasks, path)
-        return tasks
+        last_id = 4
+        save_tasks(tasks, path, last_id)
+        return tasks, last_id
 
     try:
         with path.open("r", encoding="utf-8") as file:
-            tasks = json.load(file)
+                data = json.load(file)
+
+        if isinstance(data, list):
+            tasks = data
+            last_id = None
+
+        elif isinstance(data, dict):
+            tasks = data.get("tasks")
+            last_id = data.get("last_id")
+
+            if type(last_id) is not int or last_id < 0:
+                raise ValueError("Invalid last ID.")
+
+        else:
+            raise ValueError("Invalid JSON structure.")
 
         if not isinstance(tasks, list):
             raise ValueError("JSON must contain a list.")
@@ -85,43 +100,53 @@ def load_tasks(path):
                 or task["priority"] not in ("high", "medium", "low")
                 or type(task["done"]) is not bool
             ):
-                raise ValueError("Invalid task data.")
+             raise ValueError("Invalid task data.")
 
             ids.add(task["id"])
 
-        return tasks
+        highest_id = max(ids, default=0)
 
+        if last_id is None:
+               last_id = highest_id
+
+        elif last_id < highest_id:
+               raise ValueError("Invalid last ID.")
+
+        return tasks, last_id
     except (json.JSONDecodeError, ValueError, TypeError):
-        backup = path.with_name("tasks.json.bak")
+         backup = path.with_name("tasks.json.bak")
 
-        try:
+    try:
             if backup.exists():
                 backup.unlink()
 
             path.rename(backup)
 
-        except OSError as error:
+    except OSError as error:
             raise StorageError(
                 f"could not back up invalid tasks file: {error}"
             ) from error
 
-        return []
-
+            return [], 0
     except OSError as error:
-        raise StorageError(
+     raise StorageError(
             f"could not load tasks: {error}"
         ) from error
 
 
-def save_tasks(tasks, path):
+def save_tasks(tasks, path, last_id):  
     """Save tasks to a JSON file."""
 
     path = Path(path)
 
     try:
         with path.open("w", encoding="utf-8") as file:
-            json.dump(tasks, file, indent=4)
+            data = {
+                "last_id": last_id,
+                "tasks": tasks
+            }
 
+            json.dump(data, file, indent=4)
     except (OSError, TypeError, ValueError) as error:
         raise StorageError(
             f"could not save tasks: {error}"
