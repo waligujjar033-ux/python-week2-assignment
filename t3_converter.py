@@ -30,11 +30,13 @@ TEMPERATURE = ["C", "F", "K"]
 # 2. REUSABLE INPUT HELPERS
 
 
-def ask_choice(prompt, options):
+def ask_choice(prompt, options,  validator=None):
     """Ask the user to select a valid option."""
     while True:
 
         choice = input(prompt).strip()
+        if validator is not None:
+         validator(choice)
 
         if choice in options:
             return choice

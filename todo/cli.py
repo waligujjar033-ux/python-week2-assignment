@@ -175,8 +175,9 @@ def main():
 
             choice = ask_choice(
                 "Choose: ",
-                ["1", "2", "3", "4", "5", "6"]
-            )
+                ["1", "2", "3", "4", "5", "6"],
+                validator=validate_choice
+            )  
 
             choice = validate_choice(str(choice))
 
