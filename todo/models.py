@@ -25,6 +25,10 @@ def validate_id(task_id):
     """Validate a task ID."""
 
     try:
+        if isinstance(task_id, float):
+            if not task_id.is_integer():
+                raise ValueError
+
         task_id = int(task_id)
 
     except (ValueError, TypeError):
