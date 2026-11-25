@@ -320,21 +320,17 @@ def show_monthly_totals(expenses):
     """Display monthly expense totals and the overall total."""
     totals = calculate_monthly_totals(expenses)
 
-    print("\n===== Monthly Totals =====")
-
-    print(f"{'Month':<12} {'Total'}")
-
+    print(f"{'Month':<10}{'Total'}")
     overall_total = Decimal("0.00")
 
     for month, amount in totals.items():
 
-        print(f"{month:<12} Rs {amount:,.2f}")
+        print(f"{month:<8}Rs {amount:,.2f}")    
 
         overall_total += amount
 
-    print("-" * 30)
 
-    print(f"{'TOTAL':<12} Rs {overall_total:,.2f}")
+    print(f"{'TOTAL':<10}Rs {overall_total:,.2f}")
 
 
 # ==============================
@@ -365,11 +361,9 @@ def show_category_totals(expenses):
         reverse=True
     )
 
-    print("\n===== Category Totals =====")
-
     print(
-        f"{'Category':<15}"
-        f"{'Total':<18}"
+        f"{'Category':<10}"
+        f"{'Total':<13}"
         f"{'Share'}"
     )
 
@@ -384,10 +378,9 @@ def show_category_totals(expenses):
         else:
 
             percentage = Decimal("0")
-
         print(
-            f"{category:<15}"
-            f"Rs {amount:>12,.2f}  "
+            f"{category:<10}"
+            f"Rs {amount:,.2f} "
             f"{percentage:.1f}%"
         )
 
