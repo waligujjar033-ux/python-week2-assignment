@@ -155,9 +155,12 @@ def main():
     """Run the main To-Do application."""
 
     try:
-        tasks, last_id = load_tasks(TASKS_PATH)
-        print(f"Loaded {len(tasks)} tasks.")
+        tasks, last_id, corrupted = load_tasks(TASKS_PATH)
 
+        if corrupted:
+            print("Warning: tasks.json is corrupt. Backed up to tasks.json.bak. Starting with an empty task list.")
+
+        print(f"Loaded {len(tasks)} tasks.")
     except TodoError as error:
         print("Error:", error)
         return
