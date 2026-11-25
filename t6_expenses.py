@@ -457,13 +457,8 @@ def main():
 
         print("\n===== Expense Logger =====")
 
-        print("1. Add")
-        print("2. List")
-        print("3. Monthly totals")
-        print("4. By category")
-        print("5. Export JSON")
-        print("6. Exit")
-
+        print("1. Add 2. List 3. Monthly totals 4. By category 5. Export JSON 6. Exit")
+        
         choice = input("\nChoose: ").strip()
 
         if choice == "1":
