@@ -37,11 +37,12 @@ def log_error(line_number, reason):
             file.write(message)
 
     except FileNotFoundError:
-        print("Error: log file location not found.")
+        return "Error: log file location not found."
 
     except PermissionError:
-        print("Error: permission denied while writing errors.log.")
+        return "Error: permission denied while writing errors.log."
 
+    return ""
 
 # ==============================
 # VALIDATE EXPENSE
@@ -101,6 +102,7 @@ def load_expenses():
     expenses = []
 
     bad_rows = 0
+    log_messages = []
 
     try:
 
@@ -124,24 +126,23 @@ def load_expenses():
 
                     bad_rows += 1
 
-                    log_error(line_number, str(error))
+                    log_message = log_error(line_number, str(error))
 
-        print(
+                    if log_message:
+                        log_messages.append(log_message)
+        message = (
             f"Loaded {len(expenses)} expenses from "
             f"data/expenses.csv "
             f"({bad_rows} bad rows skipped, see errors.log)"
         )
 
     except FileNotFoundError:
-
-        print("expenses.csv not found. Starting with empty list.")
+        message = "expenses.csv not found. Starting with empty list."
 
     except PermissionError:
+        message = "Permission denied while reading expenses.csv."
 
-        print("Permission denied while reading expenses.csv.")
-
-    return expenses
-
+    return expenses, message, log_messages
 
 # ==============================
 # SAVE CSV
@@ -172,25 +173,21 @@ def save_expenses(expenses):
                     "note": expense["note"]
                 })
 
-        return True
+        return True, ""
 
     except FileNotFoundError:
-
-        print("Error: CSV file path not found.")
+        return False, "Error: CSV file path not found."
 
     except PermissionError:
-
-        print("Error: permission denied while saving CSV.")
-
-    return False
+        return False, "Error: permission denied while saving CSV."
 
 
 # ==============================
 # ADD EXPENSE
 # ==============================
 
-def add_expense(expenses):
-    """Collect, validate and save a new expense."""
+def collect_expense():
+    """Collect and validate expense details."""
     print("\n===== Add Expense =====")
 
     while True:
@@ -249,21 +246,21 @@ def add_expense(expenses):
         "note": note
     }
 
+    return expense
+
+
+def add_expense(expenses, expense):
+    """Add and save a validated expense."""
+
     expenses.append(expense)
 
-    if save_expenses(expenses):
+    success, message = save_expenses(expenses)
 
-        print(
-            f"Saved: {expense_date} "
-            f"{category} Rs {amount:,.2f}"
-        )
+    if success:
+        return True, ""
 
-    else:
-
-        expenses.pop()
-
-        print("Expense was not saved.")
-
+    expenses.pop()
+    return False, message
 
 # ==============================
 # LIST EXPENSES
@@ -315,20 +312,22 @@ def calculate_monthly_totals(expenses):
 
     return dict(sorted(totals.items()))
 
+def calculate_overall_total(totals):
+    """Calculate the overall expense total."""
+    return sum(totals.values(), Decimal("0.00"))
+
 
 def show_monthly_totals(expenses):
     """Display monthly expense totals and the overall total."""
     totals = calculate_monthly_totals(expenses)
 
     print(f"{'Month':<10}{'Total'}")
-    overall_total = Decimal("0.00")
+
+    overall_total = calculate_overall_total(totals)
 
     for month, amount in totals.items():
 
         print(f"{month:<8}Rs {amount:,.2f}")    
-
-        overall_total += amount
-
 
     print(f"{'TOTAL':<10}Rs {overall_total:,.2f}")
 
@@ -337,8 +336,8 @@ def show_monthly_totals(expenses):
 # CATEGORY TOTALS
 # ==============================
 
-def show_category_totals(expenses):
-    """Display expense totals and percentage shares by category."""
+def calculate_category_totals(expenses):
+    """Calculate category totals and overall expenses."""
     totals = {}
 
     for expense in expenses:
@@ -360,6 +359,22 @@ def show_category_totals(expenses):
         key=lambda item: item[1],
         reverse=True
     )
+    results = []
+
+    for category, amount in sorted_categories:
+        if overall_total > 0:
+            percentage = (amount / overall_total) * Decimal("100")
+        else:
+            percentage = Decimal("0")
+
+        results.append((category, amount, percentage))
+
+    return results
+
+def show_category_totals(expenses):
+    """Display category totals and percentage shares."""
+
+    results = calculate_category_totals(expenses)
 
     print(
         f"{'Category':<10}"
@@ -367,17 +382,7 @@ def show_category_totals(expenses):
         f"{'Share'}"
     )
 
-    for category, amount in sorted_categories:
-
-        if overall_total > 0:
-
-            percentage = (
-                amount / overall_total
-            ) * Decimal("100")
-
-        else:
-
-            percentage = Decimal("0")
+    for category, amount, percentage in results:
         print(
             f"{category:<10}"
             f"Rs {amount:,.2f} "
@@ -431,18 +436,16 @@ def export_json(expenses):
                 ensure_ascii=False
             )
 
-        print(
+        return (
             f"Exported {len(expenses)} expenses "
             f"to data/expenses.json"
         )
 
     except FileNotFoundError:
-
-        print("Error: JSON file path not found.")
+        return "Error: JSON file path not found."
 
     except PermissionError:
-
-        print("Error: permission denied while exporting JSON.")
+        return "Error: permission denied while exporting JSON."
 
 
 # ==============================
@@ -451,19 +454,33 @@ def export_json(expenses):
 
 def main():
     """Run the expense logger menu and handle user choices."""
-    expenses = load_expenses()
+    expenses, message, log_messages = load_expenses()
 
+    for log_message in log_messages:
+        print(log_message)
+
+    print(message)
     while True:
 
         print("\n===== Expense Logger =====")
 
         print("1. Add 2. List 3. Monthly totals 4. By category 5. Export JSON 6. Exit")
-        
+
         choice = input("\nChoose: ").strip()
 
         if choice == "1":
+            expense = collect_expense()
 
-            add_expense(expenses)
+            success, message = add_expense(expenses, expense)
+
+            if success:
+                print(
+                    f"Saved: {expense['date']} "
+                    f"{expense['category']} Rs {expense['amount']:,.2f}"
+                )
+            else:
+                print(message)
+                print("Expense was not saved.")
 
         elif choice == "2":
 
@@ -478,8 +495,8 @@ def main():
             show_category_totals(expenses)
 
         elif choice == "5":
-
-            export_json(expenses)
+            message = export_json(expenses)
+            print(message)
 
         elif choice == "6":
 
