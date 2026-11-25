@@ -5,8 +5,6 @@ from collections import Counter, defaultdict
 january_data = """
 Ali,Lahore,keyboard,2,3500
 Sara,Karachi,mouse,1,1200
-
-
 Hassan,Lahore,monitor,1,32000
 Ayesha,Islamabad,keyboard,1,3500
 Ali,Lahore,mouse,3,1200
