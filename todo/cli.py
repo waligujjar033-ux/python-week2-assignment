@@ -151,8 +151,10 @@ def handle_search(tasks):
 
     show_tasks(matches)
 
-    print(f"{len(matches)} match(es).")
-
+    if len(matches) == 1:
+        print("1 match.")
+    else:
+        print(f"{len(matches)} matches.")
 
 def main():
     """Run the main To-Do application."""
