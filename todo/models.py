@@ -67,9 +67,8 @@ def validate_priority(priority):
 
     return priority
 
-
-def add_task(tasks, title, due, priority, last_id):  
-    """Return a new task list with the added task."""
+def validate_title(tasks, title):
+    """Validate a task title."""
 
     title = title.strip()
 
@@ -85,7 +84,15 @@ def add_task(tasks, title, due, priority, last_id):
                 f"'{title}' is already an open task."
             )
 
+    return title
+
+def add_task(tasks, title, due, priority, last_id):  
+    """Return a new task list with the added task."""
+
+    title = validate_title(tasks, title)
+
     due = validate_date(due)
+    
     priority = validate_priority(priority)
 
 

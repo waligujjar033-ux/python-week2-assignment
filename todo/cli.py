@@ -16,7 +16,9 @@ from todo.models import (
     search_tasks,
     sort_tasks,
     task_status,
-    validate_choice
+    validate_choice,
+    validate_title,
+    validate_date
 )
 from todo.storage import load_tasks, save_tasks
 
@@ -62,16 +64,21 @@ def show_tasks(tasks):
 def handle_add(tasks, last_id): 
     """Ask for task details and add a task."""
 
-    title = input("Title: ")
-
     while True:
-        due = input("Due (YYYY-MM-DD): ")
+        title = input("Title: ")
 
         try:
-            from todo.models import validate_date
-            validate_date(due)
+            title = validate_title(tasks, title)
             break
 
+        except ValidationError as error:
+            print("Error:", error)
+            
+    while True:
+        due = input("Due (YYYY-MM-DD): ")
+        try:
+            validate_date(due)
+            break
         except ValidationError as error:
             print("Error:", error)
 
@@ -91,11 +98,7 @@ def handle_add(tasks, last_id):
 
             return updated, last_id
         except ValidationError as error:
-
             print("Error:", error)
-
-            if "priority" not in str(error):
-                title = input("Title: ")
 
         except TodoError:
             raise
