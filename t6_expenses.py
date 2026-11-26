@@ -321,16 +321,15 @@ def show_monthly_totals(expenses):
     """Display monthly expense totals and the overall total."""
     totals = calculate_monthly_totals(expenses)
 
-    print(f"{'Month':<10}{'Total'}")
+    print(f"{'Month':<10} {'Total'}")
 
     overall_total = calculate_overall_total(totals)
 
     for month, amount in totals.items():
 
-        print(f"{month:<8}Rs {amount:,.2f}")    
+        print(f"{month:<10} Rs {amount:>9,.2f}")
 
-    print(f"{'TOTAL':<10}Rs {overall_total:,.2f}")
-
+    print(f"{'TOTAL':<10} Rs {overall_total:>9,.2f}")
 
 # ==============================
 # CATEGORY TOTALS
@@ -379,14 +378,14 @@ def show_category_totals(expenses):
     print(
         f"{'Category':<10}"
         f"{'Total':<13}"
-        f"{'Share'}"
+        f"{'Share':>6}"
     )
 
     for category, amount, percentage in results:
         print(
             f"{category:<10}"
-            f"Rs {amount:,.2f} "
-            f"{percentage:.1f}%"
+            f"Rs {amount:>9,.2f} "
+            f"{percentage:>5.1f}%"
         )
 
 
